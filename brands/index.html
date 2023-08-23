@@ -1,23 +1,38 @@
 <html>
 <head>
 <title>Brands I Like</title>
+<style>
+    p {
+        font-size: large;
+    }
+</style>
 </head>
 <body>
-<p>Oakley Sunglasses</p>
-<br>
-<br>
-<p>Boa running shorts</p>
-<br>
-<br>
-<p>L.L. Bean gear</p>
-<br>
-<br>
-<p>Darn tough socks</p>
-<br>
-<br>
-<p>Porkbun domain names</p>
-<br>
-<br>
+<script>
+        //grab the text and make in an array
+        //return a promise to array with each element being each line of text file
+        async function getArrayOfStrsFromFile(fname) {
+            let t = await fetch(fname)
+            t = await t.text()
+            t = await t.split("\n");
+            return t;
+        }
 
+        //take in an array of strings and add to the html a p element with two breaks after
+        //for each string
+        function buildHTML(text) {
+            for(let i = 0; i < text.length; i++) {
+                const div = document.createElement('div');
+                div.innerHTML += "<p>"+text[i]+"</p><br><br>";
+                document.body.appendChild(div);
+            }
+        }
+        
+        //perform the actions
+        getArrayOfStrsFromFile("input.txt").then((value) => {
+            console.log(value);
+            buildHTML(value);
+        });
+</script>
 </body>
 </html>

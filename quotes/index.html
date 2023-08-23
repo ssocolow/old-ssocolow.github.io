@@ -1,25 +1,41 @@
 <html>
 <head>
 <title>Quotes</title>
+<style>
+    p {
+        font-size: large;
+    }
+</style>
 </head>
 <body>
-<p>“Your mind is for having ideas, not holding them” - David Allen</p>
-<br>
-<br>
-<p>"Be the change you wish to see in the world" - Ghandi</p>
-<br>
-<br>
-<p>Together is better</p>
-<br>
-<br>
-<p>"The network is robust in its unstructured simplicity" - Satoshi Nakamoto</p>
-<br>
-<br>
-<p>"and tonight the stars'll be out, and don't you know that God is Pooh Bear?" - Jack Kerouac</p>
-<br>
-<br>
-<p>"No input, no output" - Andrew Huberman</p>
-<br>
-<br>
+    <script>
+        //grab the text and make in an array
+        //return a promise to array with each element being each line of text file
+        async function getArrayOfStrsFromFile(fname) {
+            let t = await fetch(fname)
+            t = await t.text()
+            t = await t.split("\n");
+            return t;
+        }
+
+        //take in an array of strings and add to the html a p element with two breaks after
+        //for each string
+        function buildHTML(text) {
+            for(let i = 0; i < text.length; i++) {
+                const div = document.createElement('div');
+                div.innerHTML += "<p>"+text[i]+"</p><br><br>";
+                document.body.appendChild(div);
+            }
+        }
+        
+        //perform the actions
+        getArrayOfStrsFromFile("input.txt").then((value) => {
+            console.log(value);
+            buildHTML(value);
+        });
+
+
+    </script>
+
 </body>
 </html>
