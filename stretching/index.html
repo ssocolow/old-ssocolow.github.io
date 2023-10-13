@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>Stretching Timer</title>
+    <style>
+      div {
+        font-size: large;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js"></script>
+  </head>
+  <body>
+    <div>How many seconds: <input type="number" id="secs" size="10" /><input id="submit" type="button" value="Start Timer" />
+    </div>
+    <script>
+let osc = new p5.Oscillator('sine');
+let button = document.getElementById("submit");
+let secs = document.getElementById("secs");
+let intervalID;
+button.addEventListener("click", updateButton);
+
+function updateButton() {
+  if (button.value === "Start Timer") {
+    button.value = "Stop Timer";
+    playNoise();
+    osc.start();
+    intervalID = setInterval(playNoise, secs.value * 1000);
+  } else {
+    button.value = "Start Timer";
+    clearInterval(intervalID);
+  }
+}
+function playNoise() {
+    osc.freq(346, 0.1);
+    osc.amp(0.4, 0.1);
+    setTimeout(stopNoise, 1000);
+}
+function stopNoise() {
+    osc.amp(0,0.1);
+}
+    </script>
+  </body>
+   </html>
